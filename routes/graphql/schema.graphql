@@ -1,34 +1,59 @@
 """This is a custom built-in Scalar type from LightHouse. It handles Carbon dates"""
 scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
 
-
 type User {
     id: ID!
     name: String!
     email: String!
     created_at: DateTime!
     updated_at: DateTime!
-    posts: [Post] @hasMany
 }
 
-type Post {
-    id: ID!
-    title: String!
-    content: String!
-    user: User! @belongsTo
-    comments: [Comment] @hasMany
+type Buyer {
+    buyerID: ID!
+    buyerName: String!
+    buyerEmail: String!
+    orders: [Order] @hasMany
 }
 
-type Comment{
-    id: ID!
-    reply: String!
-    post: Post! @belongsTo
+type Order {
+    orderID: ID!
+    buyer: Buyer! @belongsTo
+    product: [Product] @hasMany
 }
 
-type Query{
-    posts: [Post] @all
-    post (id: Int! @eq): Post @find
+type Product {
+    productID: ID!
+    productName: String!
+    order: Order! @belongsTo
 }
 
+type Query {
+    products: [Product] @all
+    product (productID: Int! @eq): Product @find
 
+    buyers: [Buyer] @all
+    buyer (buyerID: Int! @eq): Buyer @find
 
+    orders: [Order] @all
+    order (orderID: Int! @eq): Order @find
+
+    me: Buyer @middleware(checks:["auth:api"]) @auth
+}
+
+type Mutation {
+    createBuyer(
+        buyerName: String! @rules(apply: ["required", "min:4"]),
+        buyerEmail: String! @rules(apply: ["email", "unique:buyers"]),
+        password: String! @rules(apply: ["min:4"]) @bcrypt
+    ): Buyer! @create
+
+    createProduct(
+        productName: String! @rules(apply: ["required", "min:4"])
+    ): Product! @create
+
+    createOrder(
+        buyer: ID! @rules(apply: ["required"]),
+        product: ID! @rules(apply: ["required"])
+    ): Order! @create
+}

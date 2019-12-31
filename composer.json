@@ -9,8 +9,11 @@
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
-        "mll-lab/laravel-graphql-playground": "^0.3.3",
-        "nuwave/lighthouse": "^2.6"
+        "mll-lab/laravel-graphql-playground": "^2.0",
+        "nuwave/lighthouse": "^2.6",
+        "laravel/passport": "^7.1",
+        "joselfonseca/lighthouse-graphql-passport-auth": "^1.0",
+        "barryvdh/laravel-cors": "^0.11.2"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

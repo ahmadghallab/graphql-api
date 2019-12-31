@@ -15,7 +15,7 @@ return [
 
     'defaults' => [
         'guard' => 'web',
-        'passwords' => 'users',
+        'passwords' => 'buyers',
     ],
 
     /*
@@ -38,12 +38,12 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'buyers',
         ],
 
         'api' => [
-            'driver' => 'token',
-            'provider' => 'users',
+            'driver' => 'passport',
+            'provider' => 'buyers',
         ],
     ],
 
@@ -65,9 +65,9 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'buyers' => [
             'driver' => 'eloquent',
-            'model' => App\User::class,
+            'model' => App\Buyer::class,
         ],
 
         // 'users' => [
@@ -92,8 +92,8 @@ return [
     */
 
     'passwords' => [
-        'users' => [
-            'provider' => 'users',
+        'buyers' => [
+            'provider' => 'buyers',
             'table' => 'password_resets',
             'expire' => 60,
         ],
