@@ -42,7 +42,7 @@ return [
      */
     'route' => [
         'prefix' => '',
-        'middleware' => [\Fruitcake\Cors\HandleCors::class]
+        'middleware' => [\Barryvdh\Cors\HandleCors::class]
     ],
 
     /*
