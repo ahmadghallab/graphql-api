@@ -6,14 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    protected $fillable = ['buyer', 'product'];
+    protected $fillable = ['buyerID', 'productID'];
+
+    protected $primaryKey = 'orderID';
     
     public function buyer()
     {
-        return $this->belongsTo(Buyer::class, 'buyer', 'buyerID');
+        return $this->belongsTo(Buyer::class, 'buyerID', 'buyerID');
     }
-    public function products()
+    public function product()
     {
-        return $this->hasMany(Product::class, 'product', 'productID');
+        return $this->belongsTo(Product::class, 'productID', 'productID');
     }
 }

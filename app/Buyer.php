@@ -27,6 +27,6 @@ class Buyer extends Authenticatable
 
     public function orders()
     {
-        return $this->hasMany(Order::class, 'buyer', 'buyerID');
+        return $this->hasMany(Order::class, 'buyerID', 'buyerID');
     }
 }

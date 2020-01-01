@@ -1,14 +1,6 @@
 """This is a custom built-in Scalar type from LightHouse. It handles Carbon dates"""
 scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
 
-type User {
-    id: ID!
-    name: String!
-    email: String!
-    created_at: DateTime!
-    updated_at: DateTime!
-}
-
 type Buyer {
     buyerID: ID!
     buyerName: String!
@@ -19,24 +11,23 @@ type Buyer {
 type Order {
     orderID: ID!
     buyer: Buyer! @belongsTo
-    product: [Product] @hasMany
+    product: Product! @belongsTo
 }
 
 type Product {
     productID: ID!
     productName: String!
-    order: Order! @belongsTo
 }
 
 type Query {
-    products: [Product] @all
-    product (productID: Int! @eq): Product @find
+    getProducts: [Product] @all
+    getProduct (productID: Int! @eq): Product @find
 
-    buyers: [Buyer] @all
-    buyer (buyerID: Int! @eq): Buyer @find
+    getBuyers: [Buyer] @all
+    getBuyer (buyerID: Int! @eq): Buyer @find
 
-    orders: [Order] @all
-    order (orderID: Int! @eq): Order @find
+    getOrders: [Order] @all
+    getOrder (orderID: Int! @eq): Order @find
 
     me: Buyer @middleware(checks:["auth:api"]) @auth
 }
@@ -53,7 +44,7 @@ type Mutation {
     ): Product! @create
 
     createOrder(
-        buyer: ID! @rules(apply: ["required"]),
-        product: ID! @rules(apply: ["required"])
+        buyerID: ID! @rules(apply: ["required"]),
+        productID: ID! @rules(apply: ["required"])
     ): Order! @create
 }
